@@ -18,12 +18,15 @@
             other: {
               add: '11',
             },
+            arr: [{ a: '123' }, { b: '333' }],
           };
         },
       });
 
-      console.log('vm: ', vm);
+      console.log('vm: ', vm._data.age);
 
+      console.log('vm: ', vm._data.arr.push({ a: 123 }));
+      console.log('vm: ', vm._data.arr);
     </script>
   </body>
 </html>
