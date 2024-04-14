@@ -1,8 +1,12 @@
 import Watcher from './observe/watcher';
+import { patch } from './vdom/patch';
 
 export function lifecycleMixin(Vue) {
   Vue.prototype._update = function (vnode) {
-    //
+    console.log('_update  vnode: 虚拟节点', vnode);
+
+    const vm = this;
+    vm.$el = patch(vm.$el, vnode);
   };
 }
 

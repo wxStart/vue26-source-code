@@ -78,13 +78,11 @@ export function compileToFunction(template) {
     _c("div",{id:"app",style:{"color":" red"," font-size":" 30px"}},_c("p",undefined,_v("年龄:"+_s(age)+"岁")),_c("p",undefined,_v("姓名:"+_s(name))))
    */
   let code = generate(root);
-  console.log('code: ', code);
-  code  = `with(this){
-    return ${code};
-  }`;
+  console.log('code:1111 ', code);
 
-  let  renderFn = new Function(code)
+  let  renderFn = new Function(`with(this){
+    return ${code};
+  }`)
   console.log('renderFn: ', renderFn);
-  
   return renderFn;
 }
