@@ -1,4 +1,5 @@
-import { observe } from "./observe/index";
+import { observe } from './observe/index';
+import {proxy} from './util/index'
 
 export function initState(vm) {
   const opts = vm.$options;
@@ -33,13 +34,16 @@ function initData(vm) {
   }
   vm._data = data;
 
+  // 让用户直接 vm方式访问
+  for (let key in data) {
+    proxy(vm, '_data', key);
+  }
+
   observe(data);
 
   // 对象劫持
 
-  
   console.log('data: ', data);
-
 }
 function initComputed(vm) {}
 
