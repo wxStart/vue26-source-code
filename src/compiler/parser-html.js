@@ -5,7 +5,7 @@ const endTag = new RegExp(`^<\\/${qnameCapture}[^>]*>`); // 匹配标签结尾�
 const attribute =
   /^\s*([^\s"'<>\/=]+)(?:\s*(=)\s*(?:"([^"]*)"+|'([^']*)'+|([^\s"'=<>']+)))?/; // 属性匹配
 const startTagClose = /^\s*(\/?)>/; // 匹配标签结束的
-const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g;
+export const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g; // 插值语法
 
 let root = null;
 let currentParent; // 当前父亲是谁
