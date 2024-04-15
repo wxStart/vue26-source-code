@@ -18,10 +18,22 @@ export function mountComponent(vm, el) {
   // vm._render:  通过解析render 渲染出虚拟dom
   // vm._update:  通过虚拟dom渲染真实dom
 
+  callHook(vm, 'beforeMount');
+
   let updateComponent = () => {
     // 渲染和更新的时候都会调用
     vm._update(vm._render());
   };
 
   new Watcher(vm, updateComponent, () => {}, true); // true 表示是一个渲染watcher
+  callHook(vm, 'mounted');
+}
+
+export function callHook(vm, hook) {
+  const handlers = vm.$options[hook];
+  if (handlers) {
+    for (let i = 0; i < handlers.length; i++) {
+      handlers[i].call(vm);
+    }
+  }
 }

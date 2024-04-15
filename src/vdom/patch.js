@@ -8,6 +8,7 @@ export function patch(oldVnode, vnode) {
     let el = createElm(vnode);
     parentElm.insertBefore(el, oldElm.nextSibling);
     parentElm.removeChild(oldElm);
+    return el;
   }
 }
 // 递归创建真是节点

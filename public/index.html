@@ -26,14 +26,36 @@
             arr: [{ a: '123' }, { b: '333' }],
           };
         },
+        beforeCreate() {
+          console.log(333, this, this.age);
+        },
+        created() {
+          console.log('created', this, this.age);
+          console.log('created', this.$el);
+        },
+        beforeMount() {
+          console.log('beforeMount', this, this.$el);
+          debugger;
+        },
+        mounted() {
+          console.log('mounted', this, this.$el);
+          debugger;
+        },
       });
 
-    //   console.log('vm: ', vm._data.age);
+      //   console.log('vm: ', vm._data.age);
 
-    //   console.log('vm: ', vm._data.arr.push({ a: 123 }));
-    //   console.log('vm: ', vm._data.arr);
+      //   console.log('vm: ', vm._data.arr.push({ a: 123 }));
+      //   console.log('vm: ', vm._data.arr);
 
-    console.log('vm: ', vm.age);
+      console.log('vm: ', vm);
+
+
+      // 更行视图
+      setTimeout(() => {
+        vm.age = 12324;
+        vm._update(vm._render());
+      }, 3000);
     </script>
   </body>
 </html>

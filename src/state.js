@@ -3,6 +3,7 @@ import {proxy} from './util/index'
 
 export function initState(vm) {
   const opts = vm.$options;
+  console.log('opts: ', opts);
 
   if (opts.props) {
     initProps(vm);
