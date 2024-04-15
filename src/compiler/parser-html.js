@@ -7,56 +7,58 @@ const attribute =
 const startTagClose = /^\s*(\/?)>/; // 匹配标签结束的
 export const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g; // 插值语法
 
-let root = null;
-let currentParent; // 当前父亲是谁
-let stack = [];
 const ELEMENT_TYPE = 1;
 const TEXT_TYPE = 3;
 
-function createASTElement(tagName, attrs) {
-  return {
-    tag: tagName,
-    type: ELEMENT_TYPE,
-    children: [],
-    attrs,
-    parent: null,
-  };
-}
-
-function start(tagName, attrs) {
-  console.log('开始标签:', tagName, attrs);
-
-  let element = createASTElement(tagName, attrs);
-  if (!root) {
-    root = element;
-  }
-  currentParent = element; // 把当前元素标记成父 ast树
-  stack.push(element); // 将开始标签元素存放栈中
-}
-
-function chars(text) {
-  console.log('文本 是', text);
-  text = text.replace(/\s/g, '');
-  if (text) {
-    currentParent.children.push({
-      text,
-      type: TEXT_TYPE,
-    });
-  }
-}
-
-function end(tagName) {
-  console.log('结束标签:', tagName);
-  let element = stack.pop();
-  currentParent = stack[stack.length-1];
-
-  if(currentParent){
-    element.parent  =currentParent;
-    currentParent.children.push(element)
-  }
-  // 
-}
 export function parseHTML(html) {
+  let root = null;
+  let currentParent; // 当前父亲是谁
+  let stack = [];
+
+  function createASTElement(tagName, attrs) {
+    return {
+      tag: tagName,
+      type: ELEMENT_TYPE,
+      children: [],
+      attrs,
+      parent: null,
+    };
+  }
+
+  function start(tagName, attrs) {
+    console.log('开始标签:', tagName, attrs);
+
+    let element = createASTElement(tagName, attrs);
+    if (!root) {
+      root = element;
+    }
+    currentParent = element; // 把当前元素标记成父 ast树
+    stack.push(element); // 将开始标签元素存放栈中
+  }
+
+  function chars(text) {
+    console.log('文本 是', text);
+    text = text.replace(/\s/g, '');
+    if (text) {
+      currentParent.children.push({
+        text,
+        type: TEXT_TYPE,
+      });
+    }
+  }
+
+  function end(tagName) {
+    console.log('结束标签:', tagName);
+    let element = stack.pop();
+    currentParent = stack[stack.length - 1];
+
+    if (currentParent) {
+      element.parent = currentParent;
+      currentParent.children.push(element);
+    }
+    //
+  }
+
   while (html) {
     let textEnd = html.indexOf('<');
     //  索引为0 肯定是一个标签 开始标签或者结束标签
@@ -117,5 +119,5 @@ export function parseHTML(html) {
     }
     // console.log('html: ', html);
   }
-  return  root;
+  return root;
 }

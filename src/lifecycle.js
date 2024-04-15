@@ -6,6 +6,7 @@ export function lifecycleMixin(Vue) {
     console.log('_update  vnode: 虚拟节点', vnode);
 
     const vm = this;
+    // 通过虚拟节点 渲染真是dom
     vm.$el = patch(vm.$el, vnode);
   };
 }
