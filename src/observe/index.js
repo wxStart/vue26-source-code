@@ -8,6 +8,9 @@ class Observer {
     // 避免给  让 __ob__ 只能访问到值
     def(value, '__ob__', this, false);
 
+    // 这里主要是对数组整体进行依赖收集 比如访问 data.arr=[1,2,3]是一个数组么，访问data.arr属相时候进行依赖收集
+    this.dep = new Dep();
+
     if (Array.isArray(value)) {
       value.__proto__ = arrayMethods;
       this.observerArray(value);
@@ -34,15 +37,19 @@ class Observer {
 }
 
 function defineReactive(target, key, value = target[key]) {
-  observe(value); // 深层次的对象
+  const valueOb = observe(value); // 深层次的对象
 
   let dep = new Dep();
+
   Object.defineProperty(target, key, {
     get() {
       // 获取时候 收集依赖
       console.log('取值1111', target, key);
       if (Dep.target) {
-        dep.depend();
+        dep.depend(); // 当前属性的收集
+        if(valueOb && valueOb.dep){ // 属性值是数组在这里收集  然后在调用数组的方法时候 触发dep.notify()
+          valueOb.dep.depend();
+        }
         console.log('dep: 1111', dep);
       }
       return value;

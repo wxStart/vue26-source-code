@@ -43,6 +43,8 @@ methods.forEach((method) => {
       // Observer.observerArray
       ob.observerArray(inserted);
     }
-    return  result;
+    // 
+    ob.dep.notify();
+    return result;
   };
 });
