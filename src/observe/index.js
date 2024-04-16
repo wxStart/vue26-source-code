@@ -53,7 +53,7 @@ function defineReactive(target, key, value = target[key]) {
 
           // 如果数组里面还是数组
           if (Array.isArray(value)) {
-            dependArray();
+            dependArray(value);
           }
         }
         console.log('dep: 1111', dep);

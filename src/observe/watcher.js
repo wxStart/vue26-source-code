@@ -1,4 +1,5 @@
 import { pushTarget, popTarget } from './dep';
+import { queueWatcher } from './schedular';
 
 let id = 0;
 class Watcher {
@@ -19,7 +20,7 @@ class Watcher {
     if (!this.depsId.has(id)) {
       this.depsId.add(id);
       this.deps.push(dep);
-      dep.addSub(this)
+      dep.addSub(this);
     }
   }
 
@@ -29,6 +30,16 @@ class Watcher {
     popTarget();
   }
   update() {
+    console.log('update111111: ', 1111);
+
+    // 不要每次更新 都立即调用  先缓存起来
+
+    // this.get();
+    queueWatcher(this);
+  }
+
+  run() {
+    console.log('update111111: ', 2222);
     this.get();
   }
 }

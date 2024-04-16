@@ -59,6 +59,13 @@
 
       setTimeout(() => {
         vm.arr.push({ c: '1212' });
+        vm.arr.push({ c: '1212' });
+        vm.arr.push({ c: '1212' });
+
+        console.log(11111, document.getElementById('app').innerHTML);
+        vm.$nextTick(() => {
+          console.log(111112, document.getElementById('app').innerHTML);
+        });
       }, 3000);
     </script>
   </body>
