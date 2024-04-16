@@ -47,8 +47,14 @@ function defineReactive(target, key, value = target[key]) {
       console.log('取值1111', target, key);
       if (Dep.target) {
         dep.depend(); // 当前属性的收集
-        if(valueOb && valueOb.dep){ // 属性值是数组在这里收集  然后在调用数组的方法时候 触发dep.notify()
+        if (valueOb && valueOb.dep) {
+          // 属性值是数组在这里收集  然后在调用数组的方法时候 触发dep.notify()
           valueOb.dep.depend();
+
+          // 如果数组里面还是数组
+          if (Array.isArray(value)) {
+            dependArray();
+          }
         }
         console.log('dep: 1111', dep);
       }
@@ -63,6 +69,18 @@ function defineReactive(target, key, value = target[key]) {
       dep.notify();
     },
   });
+}
+
+// 收集data:{arr:[[1,2],[3]]} // 多级数组的依赖收集
+function dependArray(value) {
+  for (let index = 0; index < value.length; index++) {
+    let current = value[index];
+    current.__ob__ && current.__ob__.dep.depend();
+    // 数组中的数组依赖收集
+    if (Array.isArray(current)) {
+      dependArray(current);
+    }
+  }
 }
 
 export function observe(data) {
