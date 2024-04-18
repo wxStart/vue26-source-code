@@ -1,27 +1,22 @@
-import { mergeOptions } from '../util/index';
+import initMixin from './mixin';
+
+import { ASSETS_TYPE } from './const';
+
+import initExtend from './extend'
+import initAssetRegisters from './asstes';
+// const ASSETS_TYPE = ['component', 'filter', 'directive'];
 export function initGlobalAPI(Vue) {
   Vue.options = {};
+  initMixin(Vue);
 
-  Vue.mixins = function (mixin) {
-    this.options = mergeOptions(this.options, mixin);
-  };
-
-  Vue.mixins({
-    beforeCreate() {
-        console.log(111)
-    },
+  // 初始化过滤器  指令  组件
+  ASSETS_TYPE.forEach((type) => {
+    Vue.options[type + 's'] = {};
   });
 
-  Vue.mixins({
-    beforeCreate() {
-        console.log(222)
-    },
-  });
-  /**
-   *
-   * 生命周期合并策略
-   * Vue.mixins({
-   *    beforeCreate(){}
-   * })
-   */
+  Vue.options._base = Vue; // Vue的构造函数
+
+  initExtend(Vue)
+
+  initAssetRegisters(Vue);
 }

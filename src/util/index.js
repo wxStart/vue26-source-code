@@ -47,6 +47,18 @@ function mergeHook(parentVal, childVal) {
 LIFECYCLE_HOOKS.forEach((hook) => {
   strats[hook] = mergeHook;
 });
+// 组件的合并策略  自己身上没有就会找原型
+function mergeAssets(parentVal, childVal) {
+  const res = Object.create(parentVal); // res.__proto__ = parentVal
+  if (childVal) {
+    for (const key in childVal) {
+      res[key] = childVal[key];
+    }
+  }
+  return res;
+}
+
+strats.components = mergeAssets;
 
 export function mergeOptions(parent = {}, child) {
   const options = {};
@@ -80,3 +92,15 @@ export function mergeOptions(parent = {}, child) {
 
   return options;
 }
+
+// 判断是都是原生标签
+let tag = ['p', 'div', 'span', 'input', 'button', 'ul', 'li'];
+
+let tagObj = tag.reduce((pre, item) => {
+  pre[item] = true;
+  return pre;
+}, {});
+console.log('tagObj: ', tagObj);
+export const isReservedTag = (tagName) => {
+  return tagObj[tagName];
+};

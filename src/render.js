@@ -5,10 +5,10 @@ export function renderMixin(Vue) {
   // _s : 示例上取值
 
   Vue.prototype._c = function () {
-    return createElement(...arguments);
+    return createElement(this, ...arguments);
   };
   Vue.prototype._v = function (text) {
-    return createTextNode(text);
+    return createTextNode(this, text);
   };
 
   Vue.prototype._s = function (value) {

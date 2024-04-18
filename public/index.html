@@ -8,16 +8,36 @@
   <body>
     <div id="app" style="color: red; font-size: 30px">
       <p>年龄: {{age}} 岁</p>
-      <p>姓名: {{name}}</p>
-      <ul>
-        <li>{{arr}}</li>
-      </ul>
+      <my-com></my-com>
     </div>
     sadsadsa
     <script src="/dist/umd/vue.js"></script>
     <script>
+      // 内部会调用 Vue.extend 返回一个组件的构造函数
+      Vue.component('my-com', {
+        template: '<div>全局自定义组件</div>',
+      });
+      Vue.component('my-com2', {
+        template: '<div>全局自定义组件2</div>',
+      });
+
+      console.log('Vue:111 component', Vue.options);
+
       let vm = new Vue({
         el: '#app',
+        components: {
+          'my-com': {
+            template: `<div>
+                  局部自定义组件
+                <my-com1></my-com1>
+              </div>`,
+            components: {
+              'my-com1': {
+                template: '<div>局部自定义组件 的子组件</div>',
+              },
+            },
+          },
+        },
         data() {
           console.log('this: ', this);
           return {
@@ -49,7 +69,7 @@
       //   console.log('vm: ', vm._data.arr.push({ a: 123 }));
       //   console.log('vm: ', vm._data.arr);
 
-      console.log('vm: ', vm);
+      console.log('vm:111 component', vm);
 
       // 更行视图
       setTimeout(() => {
