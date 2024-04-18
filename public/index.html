@@ -29,12 +29,23 @@
           'my-com': {
             template: `<div>
                   局部自定义组件
-                <my-com1></my-com1>
               </div>`,
-            components: {
-              'my-com1': {
-                template: '<div>局部自定义组件 的子组件</div>',
-              },
+            // components: {
+            //   'my-com1': {
+            //     template: '<div>局部自定义组件 的子组件</div>',
+            //   },
+            // },
+            beforeCreate() {
+              console.log('beforeCreate  my-com');
+            },
+            created() {
+              console.log('created  my-com');
+            },
+            beforeMount() {
+              console.log('beforeMount  my-com');
+            },
+            mounted() {
+              console.log('mounted  my-com');
             },
           },
         },
@@ -49,13 +60,13 @@
             arr: [{ a: '123' }, { b: '333' }],
           };
         },
-        // beforeCreate() {
-        //   console.log(333, this, this.age);
-        // },
-        // created() {
-        //   console.log('created', this, this.age);
-        //   console.log('created', this.$el);
-        // },
+        beforeCreate() {
+          console.log('beforeCreate', this, this.age);
+        },
+        created() {
+          console.log('created', this, this.age);
+          console.log('created', this.$el);
+        },
         beforeMount() {
           console.log('beforeMount', this, this.$el);
         },
@@ -77,16 +88,16 @@
         // vm._update(vm._render());
       }, 1000);
 
-      setTimeout(() => {
-        vm.arr.push({ c: '1212' });
-        vm.arr.push({ c: '1212' });
-        vm.arr.push({ c: '1212' });
+      // setTimeout(() => {
+      //   vm.arr.push({ c: '1212' });
+      //   vm.arr.push({ c: '1212' });
+      //   vm.arr.push({ c: '1212' });
 
-        console.log(11111, document.getElementById('app').innerHTML);
-        vm.$nextTick(() => {
-          console.log(111112, document.getElementById('app').innerHTML);
-        });
-      }, 3000);
+      //   console.log(11111, document.getElementById('app').innerHTML);
+      //   vm.$nextTick(() => {
+      //     console.log(111112, document.getElementById('app').innerHTML);
+      //   });
+      // }, 3000);
     </script>
   </body>
 </html>

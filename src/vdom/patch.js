@@ -22,7 +22,6 @@ function createElm(vnode) {
   if (typeof tag == 'string') {
     // 实例化组件ƒ
     if (createComponent(vnode)) {
-      debugger
       return vnode.componentInstance.$el; // 等会在看看
     }
 
