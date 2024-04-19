@@ -6,8 +6,20 @@ export function lifecycleMixin(Vue) {
     console.log('_update  vnode: 虚拟节点', vnode);
 
     const vm = this;
+
+    // 第一次默认 肯定不需要diff
+    const prevVnode = vm._vnode; // 第一次取值 是娶不到的
+    console.log('prevVnode: ', prevVnode);
+
+    vm._vnode = vnode;
+
     // 通过虚拟节点 渲染真是dom
-    vm.$el = patch(vm.$el, vnode);
+    if (!prevVnode) {
+      // 第一次渲染
+      vm.$el = patch(vm.$el, vnode);
+    } else {
+      vm.$el = patch(prevVnode, vnode);
+    }
   };
 }
 

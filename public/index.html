@@ -7,14 +7,10 @@
   </head>
   <body>
     <div id="app" style="color: red; font-size: 30px">
-      <p>年龄: {{age}} 岁</p>
+      {{age}}
       <my-com></my-com>
     </div>
 
-    <div>
-      <h1>下方是实例代码 diff 的容器</h1>
-      <div id="diff"></div>
-    </div>
     <script src="/dist/umd/vue.js"></script>
     <script>
       // 内部会调用 Vue.extend 返回一个组件的构造函数
@@ -49,6 +45,9 @@
               console.log('beforeMount  my-com');
             },
             mounted() {
+              // 源码中
+              // this._vnode  组件渲染的真实节点
+              // this.$vnode  内部根据这个标签创建的虚拟节点  这里可以查看标签的属性
               console.log('mounted  my-com');
             },
           },
@@ -90,7 +89,7 @@
       setTimeout(() => {
         vm.age = 12324;
         // vm._update(vm._render());
-      }, 1000);
+      }, 5000);
 
       // setTimeout(() => {
       //   vm.arr.push({ c: '1212' });

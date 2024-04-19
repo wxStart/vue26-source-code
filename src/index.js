@@ -12,7 +12,9 @@ renderMixin(Vue);
 lifecycleMixin(Vue);
 initGlobalAPI(Vue);
 
-// demo 产生diff进行比对
+//! demo 产生diff进行比对
+
+/* 
 
 import { compileToFunction } from './compiler/index';
 import { createElm, patch } from './vdom/patch';
@@ -64,6 +66,7 @@ console.log('1111vnode:222 ', newVnode);
 setTimeout(() => {
   patch(vnode, newVnode); // 传入两个节点 会返回真是节点
 }, 5000);
+*/
 
 /**
  * 1. diff 算法的特点 平级比对

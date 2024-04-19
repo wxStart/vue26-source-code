@@ -36,6 +36,7 @@ export function patch(oldVnode, vnode) {
     let newChildren = vnode.children || [];
     if (oldChildren.length && newChildren.length) {
       // 都有孩子
+      debugger
       updateChildren(el, oldChildren, newChildren);
     } else if (newChildren.length) {
       //新的有孩子 老的没有孩子
@@ -222,7 +223,10 @@ function updateChildren(parent, oldChildren, newChildren) {
     for (let i = oldStartIndex; i <= oldEndIndex; i++) {
       let child = oldChildren[i];
       console.log('child: ', child);
-      if (child) {
+      if (child ) { //  child.el 避免的是自定义标签
+        // if(!child.el){
+        //   debugger
+        // }
         parent.removeChild(child.el);
       }
     }
